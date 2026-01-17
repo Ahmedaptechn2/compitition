@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaqoob Tech | Hero Slider</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --primary-color: #0cd15e;
+            --secondary-color: #0c59d6;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- 4. HERO SECTION WITH CAROUSEL --- */
+        .hero {
+            position: relative;
+            height: 80vh; /* Full screen height */
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Dark Overlay on Image so text is readable */
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            transition: 0.6s;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .hero-content h1:hover {
+            letter-spacing: 6px;
+            color: var(--primary-color);
+            text-shadow: 0px 0px 10px var(--primary-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Custom Icon Styling inside Button */
+        .btn i {
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="slide active" style="background-image: url(https://wajiz.pk/wp-content/uploads/2025/03/Best-Student-Laptops-in-Pakistan.jpg);">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>Modern Solutions for You</h1>
+                <p>We build the future with creativity and code.</p>
+                <a href="#" class="btn">Explore More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url(https://wise-tech.com.pk/wp-content/uploads/2023/12/best-laptops-to-look-in-pakistan.jpg);">
+            <div class="hero-content">
+                <h1>Grow Your Business</h1>
+                <p>Professional strategies to take you to the next level.</p>
+                <a href="#" class="btn">Our Services <i class="fas fa-laptop-code"></i></a>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url(https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=951&auto=format&fit=crop);">
+            <div class="hero-content">
+                <h1>Expert Team Support</h1>
+                <p>We are here to help you 24/7.</p>
+                <a href="#" class="btn">Contact Us <i class="fas fa-headset"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // AOS Initialize
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // CAROUSEL SCRIPT (Automatic Slider)
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+            
+            // Re-trigger AOS for the new content if needed
+            // AOS.refresh(); 
+        }
+
+        // Change slide every 4 seconds
+        setInterval(nextSlide, 4000);
+    </script>
+</body>
+</html>

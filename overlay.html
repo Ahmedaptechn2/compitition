@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="preloader">
+    <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <h2 class="loader-text">YAQOOB TECH</h2>
+    </div>
+</div>
+    
+            /* --- PRELOADER CUSTOMIZATION --- */
+<style>
+    /* Sab se pehle variables define karein */
+    :root {
+        --primary-color: #0cd15e; /* Green color jo spinner ke upar ghumega */
+        --white: #ffffff;
+    }
+
+    /* --- PRELOADER CUSTOMIZATION --- */
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #0f172a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .loader-finish {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    /* Is class ko HTML se match kar diya hai */
+    .loader-content {
+        text-align: center;
+    }
+
+    .loader-spinner {
+        width: 60px; 
+        height: 60px;
+        /* Border-bottom/left/right ka halka color */
+        border: 5px solid rgba(255, 255, 255, 0.1); 
+        /* Border-top ka bright color jo ghumta hua circle banayega */
+        border-top: 5px solid var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    .loader-text {
+        color: var(--white);
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        animation: pulseText 1.5s ease-in-out infinite;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    @keyframes pulseText {
+        0%, 100% { opacity: 0.5; transform: scale(0.95); }
+        50% { opacity: 1; transform: scale(1); color: var(--primary-color); }
+    }
+</style>
+        </style>
+    </div>
+</div>
+<script>
+    
+     window.addEventListener('load', function () {
+    const preloader = document.getElementById('preloader');
+    
+    setTimeout(() => {
+        preloader.classList.add('loader-finish');
+        document.body.classList.add('loaded'); // Isse content animate hoga
+    }, 1000); 
+});
+</script>
+    
+</body>
+</html>

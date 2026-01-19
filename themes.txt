@@ -1,0 +1,77 @@
+. Restaurant / Food Delivery (Pizza, Burger, Coffee)
+Vibe: Bhook lagane wale colors (Orange, Red, Yellow).
+
+:root {
+    --primary-color: #ff5722;  /* Spicy Orange (Call to Action) */
+    --secondary-color: #fbc02d; /* Cheese/Mustard Yellow */
+    --dark-bg: #1a0f0f;         /* Dark Brownish Black (Coffee/Chocolate tone) */
+    --darker-bg: #0f0505;       /* Deep Dark */
+    --white: #fff5f2;           /* Thoda sa Warm White */
+    --text-grey: #e0e0e0;
+    --transition: all 0.3s ease;
+}
+
+
+2. Travel / Tourism / Ocean
+Vibe: Samundar, Aasman aur Nature (Cyan, Blue, Sunny Yellow).
+:root {
+    --primary-color: #00e5ff;   /* Cyan (Water/Sky) */
+    --secondary-color: #ffab00; /* Sunny Yellow (Accent) */
+    --dark-bg: #001e2b;         /* Deep Ocean Blue */
+    --darker-bg: #00121a;       /* Darker Deep Blue */
+    --white: #e0f7fa;           /* Cool White */
+    --text-grey: #b2ebf2;
+    --transition: all 0.3s ease;
+}
+
+
+3. Fashion / Luxury Brand / Jewelry
+Vibe: Mehnga aur Premium (Gold, Black, Silver).
+
+CSS
+
+:root {
+    --primary-color: #d4af37;   /* Gold (Luxury feel) */
+    --secondary-color: #f8f8f8; /* Silver/White */
+    --dark-bg: #121212;         /* Pure Classy Black */
+    --darker-bg: #000000;       /* Pitch Black */
+    --white: #ffffff;
+    --text-grey: #9e9e9e;
+    --transition: all 0.3s ease;
+}
+
+
+
+Medical / Hospital / Health (Fitness)
+Vibe: Bharosa aur Safai (Teal, Clean Blue, White).
+
+CSS
+
+:root {
+    --primary-color: #2dd4bf;   /* Teal/Medical Green (Clean) */
+    --secondary-color: #3b82f6; /* Trust Blue */
+    --dark-bg: #0f172a;         /* Standard Dark Blue (Professional) */
+    --darker-bg: #020617;
+    --white: #f0fdfa;
+    --text-grey: #cbd5e1;
+    --transition: all 0.3s ease;
+}
+
+
+
+5. Creative Agency / Gaming / Portfolio
+Vibe: Energetic aur Modern (Purple, Pink, Neon).
+
+CSS
+
+:root {
+    --primary-color: #d946ef;   /* Neon Pink/Magenta */
+    --secondary-color: #8b5cf6; /* Violet/Purple */
+    --dark-bg: #170426;         /* Dark Purple Background */
+    --darker-bg: #0f011a;
+    --white: #ffffff;
+    --text-grey: #e9d5ff;
+    --transition: all 0.3s ease;
+}
+
+

@@ -1,492 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laptop Store | Yaqoob</title>
+    <title>Yaqoob Tech | Competition Ready</title>
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- 1. CSS VARIABLES (Theme Colors) --- */
+        /* --- 1. GLOBAL VARIABLES (THEME CONTROL) --- */
         :root {
-            --primary-color: #0cd15e; /* Green accent from your request */
-            --secondary-color: #116fce; /* Blue accent */
+            --primary-color: #6f0cd1;  /* Green Branding */
+            --secondary-color: #0c59d6; /* Blue Accent */
             --dark-bg: #0f172a;
+            --darker-bg: #0b1120;
             --white: #ffffff;
-            --bg-light: #f3f4f6;
+            --text-grey: #cbd5e1;
             --transition: all 0.3s ease;
         }
 
-        /* --- GLOBAL RESET --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
         body {
-            /* Fix: Gradient should be on background, not background-color */
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: var(--dark-bg);
             color: var(--white);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-
-        /* --- NAVIGATION --- */
-       
-
-      
-        /* --- PRODUCT CARDS (Image Swap + Cart Button) --- */
-        .product-card {
-            background: #1e293b; border-radius: 15px; overflow: hidden;
-            position: relative; transition: 0.4s; border: 1px solid #334155;
+        /* --- ADDED ANIMATION CSS (UPDATED) --- */
+        .flying-dot {
+            width: 35px;  /* SIZE BADHA DIYA (Mota) */
+            height: 35px; /* SIZE BADHA DIYA (Mota) */
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 0 15px var(--primary-color); /* Glow bhi badha diya */
+            
+            /* SPEED SLOW KAR DI (0.8s se 1.5s) */
+            transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1); 
         }
-        .product-card:hover { transform: translateY(-10px); border-color: var(--primary-color); }
 
-        .img-box { position: relative; height: 220px; overflow: hidden; background: white; }
-        .img-box img { 
-            position: absolute; width: 100%; height: 100%; 
-            object-fit: contain; padding: 15px; transition: 0.5s; 
+        /* --- 2. PRELOADER CSS --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center; align-items: center;
+            z-index: 10000;
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        .img-hover { opacity: 0; }
-        .product-card:hover .img-main { opacity: 0; }
-        .product-card:hover .img-hover { opacity: 1; }
-
-        .product-info { padding: 20px; text-align: center; }
-        .price-tag { color: var(--primary-color); font-size: 1.4rem; font-weight: bold; margin: 10px 0; }
-
-        .btn {
-            padding: 10px 25px; background: var(--primary-color); color: #000;
-            border-radius: 5px; font-weight: bold; border: none; cursor: pointer;
-            width: 100%; transition: 0.3s;
+        .loader-finish { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .loader-content { text-align: center; }
+        .loader-spinner {
+            width: 60px; height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
-        .btn:hover { background: var(--secondary-color); color: white; }
+        .loader-text {
+            color: var(--white);
+            font-size: 1.2rem; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase;
+            animation: pulseText 1.5s ease-in-out infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); color: var(--primary-color); }
+        }
 
-      
-    </style>
-</head>
-
-<body>
-
-  <div id="preloader">
-    <div class="loader-content">
-        <div class="loader-spinner"></div>
-        <h2 class="loader-text">YAQOOB TECH</h2>
-    </div>
-</div>
-        <style>
-            /* --- PRELOADER CUSTOMIZATION --- */
-#preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #0f172a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    /* Transition ko mazeed smooth banayein */
-    transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-/* Jab loader ko khatam karna ho to ye class JS se lagayenge */
-.loader-finish {
-    transform: translateY(-100%); /* Ye loader ko screen se upar bhej dega */
-    opacity: 0;
-}
-
-.loader-wrapper {
-    text-align: center; /* Spinner aur text ko center karne ke liye */
-}
-
-.loader-spinner {
-    width: 60px; height: 60px;
-    border: 5px solid #1e293b;
-    border-top: 5px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px; /* Center alignment + niche se space */
-}
-
-.loader-text {
-    color: var(--white);
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    animation: pulseText 1.5s ease-in-out infinite; /* Text chamakne ke liye */
-}
-
-@keyframes spin { 100% { transform: rotate(360deg); } }
-
-@keyframes pulseText {
-    0%, 100% { opacity: 0.5; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1); color: var(--primary-color); }
-}
-        </style>
-    </div>
-</div>
-
-    <nav>
-        <div class="logo">YAQOOB TECH</div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Laptops</a></li>
-            <li><a href="#">Gaming</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <style>
-            nav {
+        /* --- 3. GLASS NAVBAR --- */
+        .glass-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 8%;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 5%; background: rgba(15, 23, 42, 0.9);
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--primary-color); }
+        .nav-links a {
+            color: var(--white); text-decoration: none;
+            margin-left: 30px; font-weight: 500; transition: var(--transition);
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+        
+        .cart-icon { position: relative; font-size: 1.2rem; }
+        #cart-count {
+            position: absolute; top: -10px; right: -10px;
+            background: var(--primary-color);
+            font-size: 0.7rem; padding: 2px 6px; border-radius: 50%;
         }
 
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-transform: uppercase; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { color: white; font-weight: 600; transition: var(--transition); }
-        .nav-links a:hover { color: var(--primary-color); }
-        </style>
-    </nav>
-
-    <header class="hero">
-        <div class="slide active" style="background-image: url('https://wajiz.pk/wp-content/uploads/2025/03/Best-Student-Laptops-in-Pakistan.jpg');">
-            <div class="hero-content">
-                <h1>Premium Laptops</h1>
-                <p>Power and Performance at your fingertips.</p>
-            </div>
-        </div>
-        <div class="slide" style="background-image: url('https://wise-tech.com.pk/wp-content/uploads/2023/12/best-laptops-to-look-in-pakistan.jpg');">
-            <div class="hero-content">
-                <h1>Gaming Beasts</h1>
-                <p>Unleash the gamer within you.</p>
-            </div>
-        </div>
-        <style>
-              /* --- HERO SECTION --- */
-        .hero { position: relative; height: 70vh; width: 100%; overflow: hidden; }
+        /* --- 4. HERO CAROUSEL --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
         .slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; transition: opacity 1s ease-in-out;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             background-size: cover; background-position: center;
             display: flex; align-items: center; justify-content: center;
         }
         .slide.active { opacity: 1; }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+        .slide::after {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center; max-width: 800px; padding: 20px;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem; margin-bottom: 20px;
+            text-transform: uppercase; font-weight: 800;
+        }
+        .hero-content h1 span { color: var(--primary-color); }
+        .btn {
+            padding: 12px 30px;
+            background: var(--primary-color); color: var(--white);
+            text-decoration: none; border-radius: 5px; font-weight: 600;
+            display: inline-block; transition: var(--transition);
+        }
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,209,94,0.4);
+        }
+        
+        .arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 10; font-size: 2rem; color: rgba(255,255,255,0.5);
+            cursor: pointer; transition: 0.3s; padding: 10px;
+        }
+        .arrow:hover { color: var(--primary-color); background: rgba(0,0,0,0.5); }
+        .left-arrow { left: 20px; }
+        .right-arrow { right: 20px; }
 
-        .hero-content { position: relative; z-index: 2; text-align: center; padding: 20px; }
-        .hero-content h1 { font-size: 3.5rem; margin-bottom: 10px; transition: 0.5s; }
-        .hero-content h1:hover { letter-spacing: 5px; color: var(--primary-color); }
+        /* --- 5. FOOTER CSS --- */
+        .main-footer {
+            background: var(--darker-bg);
+            padding: 80px 10% 30px;
+            border-top: 2px solid rgba(12, 209, 94, 0.1);
+        }
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        .footer-col h3 {
+            color: var(--white); margin-bottom: 25px; position: relative;
+        }
+        .footer-col h3::after {
+            content: ''; position: absolute; left: 0; bottom: -10px;
+            width: 40px; height: 3px; background: var(--primary-color);
+        }
+        .footer-logo { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; }
+        .footer-logo span { color: var(--primary-color); }
+        .footer-col ul li { list-style: none; margin-bottom: 12px; }
+        .footer-col ul li a {
+            color: var(--text-grey); text-decoration: none;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .footer-col ul li a:hover { color: var(--white); transform: translateX(8px); }
+        
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; color: white; transition: 0.4s; text-decoration: none;
+        }
+        .social-links a:hover { background: var(--primary-color); transform: translateY(-5px); }
+        .footer-bottom {
+            text-align: center; margin-top: 60px; padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-grey);
+        }
 
-        </style>
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .glass-nav { padding: 15px 5%; }
+            .nav-links { display: none; }
+        }
+        
+        /* --- PRODUCTS SECTION --- */
+        .products-section { padding: 80px 10%; background: var(--dark-bg); }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--white); margin-bottom: 50px; font-weight: 700; }
+        .section-title span { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; overflow: hidden; position: relative; transition: var(--transition); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(12, 209, 94, 0.15); border-color: var(--primary-color); }
+        .product-image { width: 100%; height: 250px; position: relative; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .product-image img { max-width: 90%; max-height: 90%; transition: 0.5s ease; }
+        .product-card:hover .product-image img { transform: scale(1.1); opacity: 0.8; }
+        .add-btn { position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: var(--white); padding: 10px 25px; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); white-space: nowrap; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 5; }
+        .add-btn:hover { background: var(--secondary-color); }
+        .product-card:hover .add-btn { bottom: 20px; }
+        .product-info { padding: 20px; text-align: center; }
+        .category { font-size: 0.8rem; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; }
+        .product-title { font-size: 1.2rem; color: var(--white); margin: 10px 0; font-weight: 600; }
+        .stars { color: #fca903; font-size: 0.9rem; margin-bottom: 10px; }
+        .price { font-size: 1.3rem; color: var(--primary-color); font-weight: 700; }
+
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h2 class="loader-text">YAQOOB TECH</h2>
+        </div>
+    </div>
+
+    <nav class="glass-nav">
+        <a href="#" class="logo">YAQOOB <span>TECH</span></a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Products</a>
+            <a href="#">About</a>
+            <a href="#" class="btn" style="padding: 8px 20px;">Contact</a>
+            
+            <a href="#" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="arrow left-arrow" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
+        <div class="arrow right-arrow" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
+
+        <div class="slide active" style="background-image: url('https://wajiz.pk/wp-content/uploads/2025/03/Best-Student-Laptops-in-Pakistan.jpg');">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>Future of <span>Gaming</span></h1>
+                <p>High-performance machines built for professionals and gamers.</p>
+                <a href="#" class="btn">Explore Laptops <i class="fas fa-gamepad"></i></a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://wise-tech.com.pk/wp-content/uploads/2023/12/best-laptops-to-look-in-pakistan.jpg');">
+            <div class="hero-content">
+                <h1>Business <span>Solutions</span></h1>
+                <p>Reliable technology to power your enterprise workflow.</p>
+                <a href="#" class="btn">View Catalog <i class="fas fa-briefcase"></i></a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=951&auto=format&fit=crop');">
+            <div class="hero-content">
+                <h1>Premium <span>Support</span></h1>
+                <p>24/7 technical assistance for all your hardware needs.</p>
+                <a href="#" class="btn">Get Help <i class="fas fa-headset"></i></a>
+            </div>
+        </div>
     </header>
 
-    <section class="section">
-        <div class="section-title">
-            <h2>Latest Arrivals</h2>
-            <span></span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-            
-            <div class="product-card" data-aos="fade-up">
-                <div class="img-box">
-                    <img src="https://www.iphones.pk/wp-content/uploads/2024/12/images-5.jpeg" class="img-main">
-                    <img src="https://sm.pcmag.com/pcmag_au/photo/a/asus-proar/asus-proart-p16-h7606_m83c.jpg" class="img-hover">
-                </div>
-                <div class="product-info">
-                    <h3>MacBook Pro M3</h3>
-                    <p>16GB RAM | 512GB SSD</p>
-                    <div class="price-tag">$1,999</div>
-                    <button class="btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                </div>
+    <section class="products-section">
+    <h2 class="section-title" data-aos="fade-up">Latest <span>Arrivals</span></h2>
+    
+    <div class="products-grid">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71tpxtLD0aL._AC_SX679_.jpg" alt="Laptop">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
             </div>
-
-            <div class="product-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="img-box">
-                    <img src="https://m.media-amazon.com/images/I/71WpXOnVdcL._AC_SL1500_.jpg" class="img-main">
-                    <img src="https://m.media-amazon.com/images/I/71lYpY7w8kL._AC_SL1500_.jpg" class="img-hover">
-                </div>
-                <div class="product-info">
-                    <h3>Dell XPS 15</h3>
-                    <p>Intel i9 | OLED Touch</p>
-                    <div class="price-tag">$1,749</div>
-                    <button class="btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-   <footer class="main-footer">
-    <div class="footer-container">
-        <div class="footer-col" data-aos="fade-up">
-            <h2 class="footer-logo">YAQOOB <span>TECH</span></h2>
-            <p>Your one-stop shop for high-performance laptops. We provide the latest technology with official warranty and nationwide delivery.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <div class="product-info">
+                <span class="category">Gaming</span>
+                <h3 class="product-title">Alienware X16 R1</h3>
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <div class="price">$2,499</div>
             </div>
         </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                <li><a href="services.html"><i class="fas fa-chevron-right"></i> Products</a></li>
-                <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-            </ul>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SL1500_.jpg" alt="MacBook">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Business</span>
+                <h3 class="product-title">MacBook Pro M3</h3>
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="price">$1,899</div>
+            </div>
         </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
-            <h3>Categories</h3>
-            <ul>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Gaming Laptops</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Business Laptops</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Student Series</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Accessories</a></li>
-            </ul>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71S4sIPFvBL._AC_SL1500_.jpg" alt="Asus Rog">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Student</span>
+                <h3 class="product-title">Asus ROG Zephyrus</h3>
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                <div class="price">$1,450</div>
+            </div>
         </div>
-
-        <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
-            <h3>Contact Us</h3>
-            <div class="contact-info">
-                <p><i class="fas fa-map-marker-alt"></i> Tech Plaza, Karachi, Pakistan</p>
-                <p><i class="fas fa-phone"></i> +92 300 1234567</p>
-                <p><i class="fas fa-envelope"></i> info@yaqoobtech.com</p>
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71nz3cIcFOL._AC_SL1500_.jpg" alt="HP Spectre">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Ultrabook</span>
+                <h3 class="product-title">HP Spectre x360</h3>
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <div class="price">$1,250</div>
             </div>
         </div>
     </div>
-
-    <div class="footer-bottom">
-        <p>&copy; 2026 Yaqoob Tech | Designed for Web Competition</p>
+    <div class="product-card">
+    <div class="product-image">
+        <img src="https://m.media-amazon.com/images/I/71tpxtLD0aL._AC_SX679_.jpg" alt="Laptop">
+        <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
     </div>
-    <style>
-        {
-            /* --- FOOTER MAIN STYLING --- */
-.main-footer {
-    background: #0b1120; /* Deep Dark Background */
-    color: #cbd5e1;
-    padding: 100px 10% 30px; /* Generous padding for premium look */
-    margin-top: 100px;
-    border-top: 2px solid rgba(12, 209, 94, 0.1); /* Subtle neon top border */
-    position: relative;
-    overflow: hidden;
-}
+    <div class="product-info">
+        <h3>Gaming Laptop</h3>
+        <p>$2,499</p>
+    </div>
+</div>
+</section>
 
-/* Background Glow Effect (Optional but Pro) */
-.main-footer::before {
-    content: '';
-    position: absolute;
-    top: -150px;
-    right: -150px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(12, 209, 94, 0.1) 0%, transparent 70%);
-    z-index: 0;
-}
-
-.footer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px;
-    max-width: 1300px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-
-/* --- COLUMN TITLES --- */
-.footer-col h3 {
-    color: var(--white, #ffffff);
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    position: relative;
-    letter-spacing: 1px;
-}
-
-.footer-col h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    width: 50px;
-    height: 3px;
-    background: var(--primary-color, #0cd15e);
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--primary-color);
-}
-
-/* --- LOGO & BRAND TEXT --- */
-.footer-logo {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
-}
-
-.footer-logo span {
-    color: var(--primary-color, #0cd15e);
-    text-shadow: 0 0 15px rgba(12, 209, 94, 0.4);
-}
-
-.footer-col p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: #94a3b8;
-}
-
-/* --- LINKS STYLING --- */
-.footer-col ul {
-    padding-top: 5px;
-}
-
-.footer-col ul li {
-    list-style: none;
-    margin-bottom: 15px;
-}
-
-.footer-col ul li a {
-    color: #94a3b8;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.footer-col ul li a i {
-    font-size: 0.8rem;
-    color: var(--primary-color);
-}
-
-.footer-col ul li a:hover {
-    color: var(--white);
-    transform: translateX(10px); /* Smooth slide effect on hover */
-}
-
-/* --- SOCIAL MEDIA BUTTONS --- */
-.social-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.social-links a {
-    width: 45px;
-    height: 45px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    color: white;
-    font-size: 1.1rem;
-    transition: all 0.4s ease;
-}
-
-.social-links a:hover {
-    background: var(--primary-color);
-    color: #0b1120;
-    transform: translateY(-8px) rotate(10deg);
-    box-shadow: 0 10px 20px rgba(12, 209, 94, 0.3);
-}
-
-/* --- CONTACT SECTION --- */
-.contact-info p {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 20px;
-    color: #94a3b8;
-}
-
-.contact-info i {
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    margin-top: 4px;
-}
-
-/* --- BOTTOM BAR --- */
-.footer-bottom {
-    margin-top: 80px;
-    padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    text-align: center;
-}
-
-.footer-bottom p {
-    font-size: 0.85rem;
-    color: #64748b;
-    letter-spacing: 1px;
-}
-
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 768px) {
-    .main-footer {
-        padding: 60px 5% 20px;
-    }
-    
-    .footer-container {
-        gap: 35px;
-        text-align: center;
-    }
-    
-    .footer-col h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .footer-col ul li a {
-        justify-content: center;
-    }
-
-    .social-links {
-        justify-content: center;
-    }
-
-    .contact-info p {
-        justify-content: center;
-    }
-}
-        }
-    </style>
-</footer>
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col" data-aos="fade-up">
+                <h2 class="footer-logo">YAQOOB <span>TECH</span></h2>
+                <p>Your one-stop shop for high-performance laptops. Latest technology with official warranty.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Products</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Karachi, Pakistan</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +92 300 1234567</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@yaqoobtech.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Yaqoob Tech. All rights reserved.</p></div>
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // AOS Initialize
-        AOS.init({ duration: 1000, once: true });
+        AOS.init({ duration: 1000, once: false, mirror: true, offset: 120 });
 
-     window.addEventListener('load', function () {
-    const preloader = document.getElementById('preloader');
+    // ============================================
+    // === UPDATED CART LOGIC (SLOWER & THICKER) ===
+    // ============================================
     
-    setTimeout(() => {
-        preloader.classList.add('loader-finish');
-        document.body.classList.add('loaded'); // Isse content animate hoga
-    }, 1000); 
-});
+    const cartButtons = document.querySelectorAll('.add-btn');
 
-        // Carousel Logic
+    cartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            animateToCart(this);
+            const originalHTML = this.innerHTML;
+            const originalBg = this.style.background;
+            
+            this.innerHTML = '<i class="fas fa-check"></i> Adding...';
+            this.style.background = '#0c59d6';
+            
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Added';
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.style.background = originalBg;
+                }, 2000);
+            }, 1500); // Button text change bhi sync kiya
+        });
+    });
+
+    function animateToCart(button) {
+        const cartIcon = document.querySelector('.cart-icon'); 
+        const cartCountObj = document.getElementById('cart-count');
+        const dot = document.createElement('div');
+        dot.classList.add('flying-dot');
+
+        // Button Position
+        const btnRect = button.getBoundingClientRect();
+        dot.style.left = `${btnRect.left + btnRect.width / 2}px`;
+        dot.style.top = `${btnRect.top + btnRect.height / 2}px`;
+        document.body.appendChild(dot);
+
+        // Cart Icon Position
+        const cartRect = cartIcon.getBoundingClientRect();
+
+        setTimeout(() => {
+            // Target Position
+            dot.style.left = `${cartRect.left + cartRect.width / 2}px`;
+            dot.style.top = `${cartRect.top + cartRect.height / 2}px`;
+            dot.style.transform = "scale(0.1)"; 
+            dot.style.opacity = "0.7";
+        }, 50);
+
+        // **IMPORTANT:** Timeout barha kar 1500ms (1.5s) kar diya taake CSS transition se match kare
+        setTimeout(() => {
+            dot.remove();
+            let currentCount = parseInt(cartCountObj.innerText);
+            cartCountObj.innerText = currentCount + 1;
+            
+            cartIcon.style.transform = "scale(1.2)";
+            setTimeout(() => cartIcon.style.transform = "scale(1)", 200);
+
+        }, 1500); 
+    }
+
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => { preloader.classList.add('loader-finish'); }, 1000); 
+        });
+
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
+        let slideInterval = setInterval(nextSlide, 4000);
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
             slides[currentSlide].classList.add('active');
-        }, 4000);
+        }
+        function nextSlide() { showSlide(currentSlide + 1); resetTimer(); }
+        function prevSlide() { showSlide(currentSlide - 1); resetTimer(); }
+        function resetTimer() { clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 4000); }
     </script>
 </body>
 </html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+     :root {
+            --primary-color: #0cd15e;  /* Green Branding */
+            --secondary-color: #0c59d6; /* Blue Accent */
+            --dark-bg: #0f172a;
+            --darker-bg: #0b1120;
+            --white: #ffffff;
+            --text-grey: #cbd5e1;
+            --transition: all 0.3s ease;
+        }
+
+    /* --- PRODUCT SECTION CSS --- */
+.products-section {
+    padding: 80px 10%;
+    background: var(--dark-bg);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+.section-title span {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+/* Grid Layout */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive */
+    gap: 30px;
+}
+
+/* --- CARD DESIGN --- */
+.product-card {
+    background: rgba(255, 255, 255, 0.03); /* Halka Glass Effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+}
+
+.product-card:hover {
+    transform: translateY(-10px); /* Card Upar Uthega */
+    box-shadow: 0 10px 20px rgba(12, 209, 94, 0.15); /* Green Glow */
+    border-color: var(--primary-color);
+}
+
+/* Image Area */
+.product-image {
+    width: 100%;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    background: #fff; /* Image ke peeche white background taake saaf dikhe */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 90%;
+    max-height: 90%;
+    transition: 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1); /* Image Zoom Effect */
+    opacity: 0.8; /* Thoda dhundla taake button dikhe */
+}
+
+/* --- ADD TO CART BUTTON (HIDDEN INITIALLY) --- */
+.add-btn {
+    position: absolute;
+    bottom: -50px; /* Chupa hua */
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+    white-space: nowrap;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.add-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* Hover par Button Upar Aayega */
+.product-card:hover .add-btn {
+    bottom: 20px;
+}
+
+/* Product Info */
+.product-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.category {
+    font-size: 0.8rem;
+    color: var(--text-grey);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    color: var(--white);
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.stars {
+    color: #fca903; /* Gold Color */
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+</style>
+<body>
+    <section class="products-section">
+    <h2 class="section-title" data-aos="fade-up">Latest <span>Arrivals</span></h2>
+    
+    <div class="products-grid">
+        
+        <div class="product-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71tpxtLD0aL._AC_SX679_.jpg" alt="Laptop">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Gaming</span>
+                <h3 class="product-title">Alienware X16 R1</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="price">$2,499</div>
+            </div>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SL1500_.jpg" alt="MacBook">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Business</span>
+                <h3 class="product-title">MacBook Pro M3</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="price">$1,899</div>
+            </div>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71S4sIPFvBL._AC_SL1500_.jpg" alt="Asus Rog">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Student</span>
+                <h3 class="product-title">Asus ROG Zephyrus</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <div class="price">$1,450</div>
+            </div>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="product-image">
+                <img src="https://m.media-amazon.com/images/I/71nz3cIcFOL._AC_SL1500_.jpg" alt="HP Spectre">
+                <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+            <div class="product-info">
+                <span class="category">Ultrabook</span>
+                <h3 class="product-title">HP Spectre x360</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="price">$1,250</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   <script>
+    AOS.init({
+        duration: 2000,   // Animation kitni der chale (1 second)
+        once: false,      // Sirf ek baar nahi, baar baar chale
+        mirror: true,     // Scroll up karte waqt wapis animate ho (Yahi aapko chahiye)
+        offset: 120,      // Kitna scroll hone par animation shuru ho
+    });
+    // Cart Counter Logic
+let count = 0;
+const cartButtons = document.querySelectorAll('.add-btn');
+// Maan lijiye aapke navbar mein cart icon ki id 'cart-count' hai
+const cartDisplay = document.querySelector('#cart-count'); 
+
+cartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        count++;
+        if(cartDisplay) cartDisplay.innerText = count;
+        
+        // Ek simple alert ya toast dikha dein
+        alert("Item added to cart!"); 
+        
+        // Button ka text change kar dein temporary
+        button.innerHTML = '<i class="fas fa-check"></i> Added';
+        button.style.background = '#0c59d6';
+    });
+});
+</script>
+
+    
+</body>
+</html>

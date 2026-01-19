@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* --- 1. FLYING DOT ANIMATION --- */
+.flying-dot {
+    width: 35px;  /* Mota size */
+    height: 35px;
+    background-color: #6f0cd1; /* Aapka theme color */
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none; /* Click block nahi karega */
+    box-shadow: 0 0 15px #6f0cd1; /* Glow effect */
+    transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1); /* Slow & Smooth speed */
+}
+
+/* --- 2. PRODUCT CARD DESIGN --- */
+.product-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    max-width: 300px; /* Card ki chaurai */
+    margin: 10px;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(111, 12, 209, 0.15); /* Greenish/Purple Glow */
+    border-color: #6f0cd1;
+}
+
+/* Image Section */
+.product-image {
+    width: 100%;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 90%;
+    max-height: 90%;
+    transition: 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* --- 3. ADD TO CART BUTTON --- */
+.add-btn {
+    position: absolute;
+    bottom: -50px; /* Pehle chhupa hua */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #6f0cd1;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 5;
+}
+
+.add-btn:hover {
+    background: #0c59d6;
+}
+
+.product-card:hover .add-btn {
+    bottom: 20px; /* Hover pe upar aayega */
+}
+
+/* Product Info Text */
+.product-info {
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+</style>
+<body>
+    <div class="cart-icon" style="position: fixed; top: 20px; right: 20px; color: white; font-size: 24px;">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-count" style="background: red; font-size: 12px; padding: 2px 6px; border-radius: 50%;">0</span>
+</div>
+
+<div class="product-card">
+    <div class="product-image">
+        <img src="https://m.media-amazon.com/images/I/71tpxtLD0aL._AC_SX679_.jpg" alt="Laptop">
+        <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+    </div>
+    <div class="product-info">
+        <h3>Gaming Laptop</h3>
+        <p>$2,499</p>
+    </div>
+</div>
+    
+    <script>
+        // Saare buttons select karo
+const cartButtons = document.querySelectorAll('.add-btn');
+
+cartButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault(); 
+        
+        // 1. Animation function call karo
+        animateToCart(this);
+        
+        // 2. Button Text Change Logic (Optional)
+        const originalHTML = this.innerHTML;
+        const originalBg = this.style.background;
+        
+        this.innerHTML = 'Adding...';
+        this.style.background = '#0c59d6';
+        
+        setTimeout(() => {
+            this.innerHTML = 'Added';
+            setTimeout(() => {
+                this.innerHTML = originalHTML;
+                this.style.background = originalBg;
+            }, 2000);
+        }, 1500);
+    });
+});
+
+function animateToCart(button) {
+    // Navbar wala Cart Icon dhundo
+    const cartIcon = document.querySelector('.cart-icon'); 
+    const cartCountObj = document.getElementById('cart-count');
+    
+    // Agar cart icon page pe nahi mila to error se bacho
+    if (!cartIcon) { console.error("Cart Icon not found!"); return; }
+
+    // Flying Dot Create karo
+    const dot = document.createElement('div');
+    dot.classList.add('flying-dot');
+
+    // Button ki position nikalo
+    const btnRect = button.getBoundingClientRect();
+    
+    // Dot ko button ke center mein rakho
+    dot.style.left = `${btnRect.left + btnRect.width / 2}px`;
+    dot.style.top = `${btnRect.top + btnRect.height / 2}px`;
+
+    document.body.appendChild(dot);
+
+    // Cart Icon ki position nikalo
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    // Thoda sa wait karke udne wala transition shuru karo
+    setTimeout(() => {
+        dot.style.left = `${cartRect.left + cartRect.width / 2}px`;
+        dot.style.top = `${cartRect.top + cartRect.height / 2}px`;
+        dot.style.transform = "scale(0.1)"; // Chhota hote hue jayega
+        dot.style.opacity = "0.7";
+    }, 50);
+
+    // Jab dot pohanch jaye (1.5s baad)
+    setTimeout(() => {
+        dot.remove(); // Dot hata do
+        
+        // Count update karo
+        if(cartCountObj) {
+            let currentCount = parseInt(cartCountObj.innerText);
+            cartCountObj.innerText = currentCount + 1;
+        }
+
+        // Cart Icon ko thoda shake karo
+        cartIcon.style.transform = "scale(1.2)";
+        cartIcon.style.transition = "0.2s";
+        setTimeout(() => cartIcon.style.transform = "scale(1)", 200);
+
+    }, 1500); // Yeh time CSS transition time (1.5s) se match hona chahiye
+}
+    </script>
+</body>
+</html>
